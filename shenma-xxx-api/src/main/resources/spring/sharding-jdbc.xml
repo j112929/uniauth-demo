@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:sharding="http://shardingjdbc.io/schema/shardingjdbc/sharding"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://shardingjdbc.io/schema/shardingjdbc/sharding 
+                        http://shardingjdbc.io/schema/shardingjdbc/sharding/sharding.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:property-placeholder
+		ignore-unresolvable="true" />
+
+<!-- 	<sharding:standard-strategy id="databaseShardingStrategy" sharding-column="id" precise-algorithm-class="com.shenma.oss.algorithm.DatabaseShardingAlgorithm"/> -->
+    <sharding:standard-strategy id="tableShardingStrategy" sharding-column="lasttime" precise-algorithm-class="com.shenma.base.algorithm.TableShardingHashAlgorithm"/>
+    
+    <sharding:data-source id="shardingDataSource">
+        <sharding:sharding-rule data-source-names="ds_oss_0">
+            <sharding:table-rules>
+                <sharding:table-rule logic-table="oss_attachment" actual-data-nodes="ds_oss_${0}.oss_attachment_${0..1}"  table-strategy-ref="tableShardingStrategy" generate-key-column="lasttime" />
+            </sharding:table-rules>
+        </sharding:sharding-rule>
+    </sharding:data-source>
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="shardingDataSource" />
+    </bean>
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="shardingDataSource"/>
+    </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="io.shardingjdbc.example.spring.namespace.mybatis"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+</beans>

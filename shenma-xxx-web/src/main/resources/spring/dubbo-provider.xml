@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    
+    <dubbo:application name="${dubbo.application.name}"/>
+    <dubbo:provider timeout="${dubbo.provider.timeout}" token="${dubbo.provider.token}" /> 
+    <dubbo:consumer timeout="${dubbo.consumer.timeout}" check="${dubbo.consumer.check}" />
+    <dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" username="${dubbo.admin.username}" password="${dubbo.admin.password}" group="${dubbo.registry.group}"  timeout="${dubbo.registry.timeout}"/>
+    <dubbo:protocol name="${dubbo.protocol.name}" dispatcher="${dubbo.protocol.dispatcher}" threadpool="${dubbo.protocol.threadpool}" threads="${dubbo.protocol.threads}" accepts="${dubbo.protocol.accepts}"  port="${dubbo.protocol.port}" charset="${dubbo.protocol.charset}" payload="${dubbo.protocol.payload}"  />
+    <!-- 声明需要暴露的服务接口 -->
+    <!-- <dubbo:service interface="com.shenma.paulfrank.service.LogCollector" ref="logCollectorHandle" loadbalance="${dubbo.service.loadbalance}" /> -->
+	
+</beans>

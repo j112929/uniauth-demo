@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shenma.oss.mapper.ModuleMapper">
+   <cache type="com.shenma.base.redis.MybatisRedisCache" />
+  <resultMap id="BaseResultMap" type="com.shenma.oss.domain.Module">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="module_key" jdbcType="VARCHAR" property="moduleKey" />
+    <result column="is_enable" jdbcType="CHAR" property="isEnable" />
+    <result column="module_desc" jdbcType="VARCHAR" property="moduleDesc" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="secret_key" jdbcType="VARCHAR" property="secretKey" />
+    <result column="rsa_public_key" jdbcType="VARCHAR" property="rsaPublicKey" />
+    <result column="rsa_private_key" jdbcType="VARCHAR" property="rsaPrivateKey" />
+    <result column="url_defalut_expire" jdbcType="BIGINT" property="urlDefalutExpire" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, module_key, is_enable, module_desc, create_time, update_time, secret_key, url_defalut_expire,rsa_public_key,rsa_private_key
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.shenma.oss.domain.Module" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oss_module
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oss_module
+  </select>
+   <select id="select" parameterType="com.shenma.oss.domain.Module" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from oss_module
+    where 1=1 
+    <if test="moduleKey != null ">
+     	and module_key = #{moduleKey,jdbcType=VARCHAR}
+     </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from oss_module
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.shenma.oss.domain.Module">
+    insert into oss_module (id, module_key, is_enable, 
+      module_desc, create_time, update_time, 
+      secret_key, url_defalut_expire)
+    values (#{id,jdbcType=VARCHAR}, #{moduleKey,jdbcType=VARCHAR}, #{isEnable,jdbcType=CHAR}, 
+      #{moduleDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{secretKey,jdbcType=VARCHAR}, #{urlDefalutExpire,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shenma.oss.domain.Module">
+    insert into oss_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="moduleKey != null">
+        module_key,
+      </if>
+      <if test="isEnable != null">
+        is_enable,
+      </if>
+      <if test="moduleDesc != null">
+        module_desc,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="secretKey != null">
+        secret_key,
+      </if>
+      <if test="urlDefalutExpire != null">
+        url_defalut_expire,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleKey != null">
+        #{moduleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        #{isEnable,jdbcType=CHAR},
+      </if>
+      <if test="moduleDesc != null">
+        #{moduleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secretKey != null">
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="urlDefalutExpire != null">
+        #{urlDefalutExpire,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shenma.oss.domain.Module">
+    update oss_module
+    <set>
+      <if test="moduleKey != null">
+        module_key = #{moduleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=CHAR},
+      </if>
+      <if test="moduleDesc != null">
+        module_desc = #{moduleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secretKey != null">
+        secret_key = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="urlDefalutExpire != null">
+        url_defalut_expire = #{urlDefalutExpire,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shenma.oss.domain.Module">
+    update oss_module
+    set module_key = #{moduleKey,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=CHAR},
+      module_desc = #{moduleDesc,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      secret_key = #{secretKey,jdbcType=VARCHAR},
+      url_defalut_expire = #{urlDefalutExpire,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

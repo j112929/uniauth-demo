@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>shenma-xxx-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>${shenma.version}</version>
+    <name>shenma.xxx.parent</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <shenma.version>1.0.0.T1</shenma.version>
+    </properties>
+    <parent>
+        <groupId>com.shenma</groupId>
+        <artifactId>shenma-super-parent</artifactId>
+        <version>1.0.73.RC</version>
+    </parent>
+    <dependencies>
+          
+    </dependencies>
+    <modules>
+        <module>shenma-xxx-client</module>
+        <module>shenma-xxx-impl</module>
+        <module>shenma-xxx-web</module>
+        <module>shenma-xxx-api</module>
+		<module>shenma-xxx-job</module>
+    </modules>
+</project>
